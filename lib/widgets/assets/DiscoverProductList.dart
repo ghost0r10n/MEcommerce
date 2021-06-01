@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:mecommerce/screens/ProductDetails.dart';
 
 import 'package:random_color/random_color.dart';
 
@@ -54,19 +55,27 @@ class ProductWidgetCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print('open'),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => ProductDetails(this.key, index, colors[index]))),
       child: Container(
         width: 360,
         height: 200,
         child: Stack(
           children: [
-            Container(
-              width: 230,
-              height: 400,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                color: colors[index],
+            Hero(
+              tag: 'container$index',
+              child: ClipPath(
+                child: Container(
+                  width: 230,
+                  height: 400,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    color: colors[index],
+                  ),
+                ),
               ),
             ),
             Align(
@@ -80,7 +89,7 @@ class ProductWidgetCarousel extends StatelessWidget {
                     children: [
                       Text(
                         'MARCA',
-                        style: TextStyle(fontSize: 15, color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 15),
                       ),
                       Text(
                         'NOME MODELLO',
@@ -102,19 +111,25 @@ class ProductWidgetCarousel extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    'assets/test.png',
-                    width: 200,
+                  child: Hero(
+                    tag: 'productImage$index',
+                    child: Image.asset(
+                      'assets/test.png',
+                      width: 200,
+                    ),
                   ),
                 )),
-            GestureDetector(
-              onTap: () => print('like'),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Icon(
-                  Icons.favorite_outline,
-                  size: 30,
-                  color: Colors.white,
+            Hero(
+              tag: 'like$index',
+              child: GestureDetector(
+                onTap: () => print('like'),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Icon(
+                    Icons.favorite_outline,
+                    size: 30,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             )
